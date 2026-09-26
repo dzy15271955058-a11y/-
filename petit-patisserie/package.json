@@ -1,1 +1,0 @@
-{"name":"petit-patisserie","private":true,"type":"module","scripts":{"check":"node --check dist/app.js && node --check dist/models.js && node --check dist/soft-renderer.js"}}

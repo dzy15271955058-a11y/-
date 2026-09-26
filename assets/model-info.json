@@ -1,0 +1,33 @@
+{
+  "referenceImages": 131,
+  "checklistImages": 5,
+  "destinations": 70,
+  "editableMeshNodes": 105345,
+  "triangles": 26461296,
+  "uniqueGeometry": 7688,
+  "materials": 503,
+  "glbBytes": 87596140,
+  "parts": [
+    "dream-island.part0",
+    "dream-island.part1",
+    "dream-island.part2",
+    "dream-island.part3",
+    "dream-island.part4",
+    "dream-island.part5",
+    "dream-island.part6",
+    "dream-island.part7",
+    "dream-island.part8",
+    "dream-island.part9",
+    "dream-island.part10",
+    "dream-island.part11",
+    "dream-island.part12",
+    "dream-island.part13",
+    "dream-island.part14",
+    "dream-island.part15",
+    "dream-island.part16",
+    "dream-island.part17",
+    "dream-island.part18",
+    "dream-island.part19",
+    "dream-island.part20"
+  ]
+}

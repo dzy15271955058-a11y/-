@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#fa70af"><meta name="description" content="在梦想海屿自由换装、经营农场、照料动物、调饮、制作纸杯蛋糕和裱花，在海边堆沙堡、拼积木，保存自己的创作。">
+  <title>芭比 · 海屿梦想冒险</title>
+  <link rel="stylesheet" href="./style.css"><link rel="stylesheet" href="./game.css"><link rel="stylesheet" href="./hands-on.css"><link rel="stylesheet" href="./lifestyle.css"><link rel="stylesheet" href="./travel.css"><link rel="stylesheet" href="./adventure.css">
+  <script type="importmap">{"imports":{"three":"./vendor/three.module.min.js"}}</script>
+</head>
+<body>
+  <main id="world" aria-label="梦想海屿冒险游戏"><canvas id="scene" aria-label="拖动旋转，滚轮缩放；使用目的地按钮探索不同空间"></canvas></main>
+  <div id="loading"><div class="loading-heart">♡</div><strong>正在打开你的梦想海屿</strong><span id="load-status">阳光、花园，还有一点点魔法…</span><div class="load-track"><i></i></div></div>
+  <header class="topbar">
+    <div class="brand"><span class="brand-script">Barbie</span><div><strong>海屿梦想冒险</strong><small>PLAY YOUR OWN STORY</small></div></div>
+    <div class="top-actions"><button id="day-button" class="glass icon-btn" title="选择晴日、黄昏或星夜" aria-haspopup="dialog">☀ <span>晴日</span></button><button id="snow-button" class="glass icon-btn" title="独立切换雪景" aria-pressed="false">❄ <span>雪景</span></button><button id="sound-button" class="glass icon-btn" title="开启环境音乐" aria-pressed="false">♫ <span>声音</span></button><button id="photo-button" class="glass icon-btn" title="保存当前画面">▣ <span>拍照</span></button><button id="help-button" class="glass icon-btn" title="操作说明与模型下载">?</button></div>
+  </header>
+  <aside class="destinations glass" aria-label="目的地"><div class="panel-head"><span>今天，想去哪里？</span><button id="fold-menu" aria-label="收起目的地">−</button></div><div id="places"></div><div class="menu-footer"><span>逐图对应 · 分区探索</span><button id="tour-button">▷ 自动漫游</button></div></aside>
+  <div id="hotspots" aria-hidden="true"></div>
+  <section id="location" class="location glass"><span class="eyebrow" id="place-category">DREAMHOUSE / 01</span><h1 id="place-name">阳光与泳池</h1><p id="place-description">沿着粉色露台，走进你的海边梦想豪宅。</p><div id="place-actions"></div></section>
+  <div class="view-controls glass" aria-label="建筑显示"><span>看进房子</span><button data-layer="full" class="selected">完整</button><button data-layer="open">开顶</button><button data-layer="ground">一层</button><button data-layer="upper">二层</button></div>
+  <nav class="world-nav glass" aria-label="世界区域"><button data-world="home" class="active">⌂ <span>梦想豪宅</span></button><button data-world="beach">☼ <span>海滩假日</span></button><button data-world="underwater">♆ <span>美人鱼秘境</span></button><button data-world="wardrobe">♕ <span>海底衣帽宫</span></button><button data-world="sky">☁ <span>天空之城</span></button></nav>
+  <div class="bottom-left"><button id="fly-button" class="glass">✧ 自由飞行</button><span id="control-hint">拖动旋转 · 滚轮靠近 · 右键平移</span></div>
+  <div class="zoom glass"><button id="zoom-in" aria-label="放大">＋</button><button id="reset-camera" aria-label="返回总览">⌖</button><button id="zoom-out" aria-label="缩小">−</button></div>
+  <div id="toast" role="status" aria-live="polite"></div>
+  <dialog id="weather-dialog"><button class="close-dialog" aria-label="关闭">×</button><span class="eyebrow">LIGHT OVER THE ISLAND</span><h2>此刻的海岛</h2><div class="time-options"><button data-time="day" class="selected" aria-pressed="true"><b>☀ 晴日</b><span>清透玻璃海与明亮阳光</span></button><button data-time="dusk" aria-pressed="false"><b>◒ 黄昏</b><span>粉金色天空与柔和晚霞</span></button><button data-time="night" aria-pressed="false"><b>☾ 星夜</b><span>月光、暖窗与闪亮灯火</span></button></div><p class="quiet">雪景可通过顶部雪花按钮独立开启。</p></dialog>
+  <dialog id="activity-dialog"><button class="close-dialog" aria-label="关闭">×</button><div id="activity-content"></div></dialog>
+  <dialog id="help-dialog"><button class="close-dialog" aria-label="关闭">×</button><span class="eyebrow">MAKE YOURSELF AT HOME</span><h2>欢迎来到星光海屿群岛 ♡</h2><p>点「星光海屿」打开世界地图与筹备手册。从主岛农场收获草莓，亲手做一份饮品或蛋糕，交付旅行礼物后乘大巴前往风铃山谷。修复溪桥、水车和温室，继续解锁外海与深海。服装、材料、餐点、伙伴与故事共用本机存档。</p><p>旅行时用 WASD / 方向键驾驶与步行，潜艇和飞机用 Q 上升、E 下降；也可用屏幕方向盘。停靠后下车，点地点名称走近互动。原有豪宅房间、天空城和海底衣帽宫仍可自由探索。</p><div class="help-grid"><div><b>看见每个细节</b><p>用「开顶／一层／二层」查看房间内部；近距离目的地会自动打开遮挡的屋顶。「天空之城」里的古树森林、树屋、溪桥和王冠亭均有独立目的地；「咖啡甜品吧」「池畔下午茶」「花环秋千」也可直接进入。底部「海底衣帽宫」直接进入长廊，还可登上二层、乘电梯或给人偶换装。</p></div><div><b>让梦想动起来</b><p>直接点马车、圣诞树或飞马，开门、旋转星光环或控制振翅；目的地下方也有按钮。邮轮可巡航、鸣笛和开关灯光，小镇店门可打开。</p></div><div><b>自由飞行</b><p>WASD移动，Q下降、E上升，Shift加速。手机也可通过目的地、拖动与双指探索。</p></div><div><b>留住喜欢的一刻</b><p>「拍照」下载当前画面。顶部天气按钮选择晴日、黄昏或星夜，雪景按钮可独立开启飘雪与圣诞魔法。声音默认关闭。</p></div></div><a class="primary download-model" href="#download-model">下载豪宅3D模型 · GLB</a><p class="quiet">GLB包含原豪宅世界的静态几何、光泽与布料材质，并提供晴日和圣诞雪季两个场景；新增旅行地图、剧情、经营与动态互动保留在网页中。可导入支持GLB的软件继续编辑。</p><details><summary>参考与创作说明</summary><p>以你提供的131张场景与人物图片、5张空间清单为创作依据，保留古典主楼与玻璃泳池翼楼两种建筑语言，整合成可探索的海岛庄园。未拍全的连接关系及思琪、思佩、Kelly房内细节为补充设计。</p><p><a href="https://www.architecturaldigest.com/story/inside-the-barbie-dreamhouse-a-fuchsia-fantasy-inspired-by-palm-springs" target="_blank" rel="noreferrer">电影美术设计</a> · <a href="https://www.universalpicturesathome.com/movies/barbie-in-a-mermaid-tale" target="_blank" rel="noreferrer">美人鱼历险记</a></p></details></dialog>
+  <div id="touch-flight" hidden><button data-key="KeyW">↑</button><button data-key="KeyA">←</button><button data-key="KeyS">↓</button><button data-key="KeyD">→</button><button data-key="KeyE">升</button><button data-key="KeyQ">降</button></div>
+  <script type="module" src="./app.js"></script>
+</body></html>

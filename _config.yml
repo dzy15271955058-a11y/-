@@ -1,0 +1,3 @@
+# 若上传时遗漏隐藏文件 .nojekyll，仍保留 Three.js 依赖目录。
+include:
+  - vendor

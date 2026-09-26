@@ -1,0 +1,11 @@
+import {T,v} from './kit.js';
+export const LIGHTING={
+ day:{label:'晴日',symbol:'☀',sky:'#93d4ee',horizon:'#dae8f7',sun:'#fff5e5',hemi:'#e4f5ff',ground:'#c9b5bd',sunPower:2.5,ambient:1.65,fill:1.0,position:[-46,89,34],water:'#90bdf4',pool:'#164fce',reflection:'#d8e6ff',exposure:.96},
+ dusk:{label:'黄昏',symbol:'◒',sky:'#8184c0',horizon:'#f5c0ae',sun:'#ffd1a6',hemi:'#d9cff4',ground:'#ad8caa',sunPower:1.75,ambient:1.36,fill:.84,position:[-105,27,-90],water:'#9fbaf0',pool:'#234fc1',reflection:'#e8d8f3',exposure:.98},
+ night:{label:'星夜',symbol:'☾',sky:'#17233e',horizon:'#354764',sun:'#dcecff',hemi:'#b7c8f0',ground:'#5b4765',sunPower:.28,ambient:.84,fill:.6,position:[-38,80,26],water:'#749bdd',pool:'#153d99',reflection:'#bbcfff',exposure:1.02}
+};
+export function createAtmosphere(){const material=new T.ShaderMaterial({side:T.BackSide,depthWrite:false,toneMapped:false,uniforms:{zenith:{value:new T.Color(LIGHTING.day.sky)},horizon:{value:new T.Color(LIGHTING.day.horizon)},sunColor:{value:new T.Color(LIGHTING.day.sun)},sunDirection:{value:v(...LIGHTING.day.position).normalize()},night:{value:0}},vertexShader:'varying vec3 direction;void main(){direction=position;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}',fragmentShader:`varying vec3 direction;uniform vec3 zenith;uniform vec3 horizon;uniform vec3 sunColor;uniform vec3 sunDirection;uniform float night;
+ void main(){vec3 d=normalize(direction);float h=clamp(d.y,0.,1.);vec3 color=mix(horizon,zenith,pow(h,.55));float alignment=max(0.,dot(d,sunDirection));float halo=pow(alignment,100.)*.11;float sun=smoothstep(.99962,.99986,alignment);color+=sunColor*(halo+sun*.62);gl_FragColor=vec4(color,1.);
+ #include <colorspace_fragment>
+ }`});const dome=new T.Mesh(new T.SphereGeometry(900,40,20),material);dome.name='晴日黄昏与星夜天空';dome.frustumCulled=false;dome.renderOrder=-100;return dome;}
+export function setAtmosphere(dome,preset,winter=false){const u=dome.material.uniforms;u.zenith.value.set(preset.sky);u.horizon.value.set(preset.horizon);if(winter){u.zenith.value.lerp(new T.Color('#dbe1ed'),.18);u.horizon.value.lerp(new T.Color('#e5e5ef'),.13);}u.sunColor.value.set(preset.sun);u.sunDirection.value.set(...preset.position).normalize();u.night.value=preset===LIGHTING.night?1:0;}
